@@ -14,6 +14,7 @@ handle = "custom-banner"
 # and the file that contains your extension’s source code. Learn more:
 # https://shopify.dev/docs/api/checkout-ui-extensions/unstable/targets-overview
 
+#[START custom-banner.config-ext-point]
 [[extensions.targeting]]
 target = "purchase.checkout.block.render"
 module = "./src/index.js"
@@ -23,6 +24,7 @@ export = "checkoutBlock"
 target = "purchase.checkout.delivery-address.render-before"
 module = "./src/index.js"
 export = "deliveryAddress"
+#[END custom-banner.config-ext-point]
 
 [extensions.capabilities]
 # Gives your extension access to directly query Shopify’s storefront API.
