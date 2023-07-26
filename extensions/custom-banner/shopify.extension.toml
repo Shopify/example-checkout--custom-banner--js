@@ -17,7 +17,7 @@ handle = "custom-banner"
 #[START custom-banner.config-ext-point]
 [[extensions.targeting]]
 target = "purchase.checkout.block.render"
-module = "./src/index.js"
+module = "./src/Checkout.js"
 #[END custom-banner.config-ext-point]
 
 [extensions.capabilities]
