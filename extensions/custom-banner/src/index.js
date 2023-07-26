@@ -1,33 +1,40 @@
 import { extension, Banner } from "@shopify/ui-extensions/checkout";
+
 // [START custom-banner.ext-point]
-// Set the entry points for the extension
-const checkoutBlock = extension("purchase.checkout.block.render", renderApp);
-export { checkoutBlock };
-const deliveryAddress = extension("purchase.checkout.delivery-address.render-before", renderApp);
-export { deliveryAddress };
+// Set up the entry point for the extension
+export default extension(
+  "purchase.checkout.block.render",
+  (root, { settings }) => {
 // [END custom-banner.ext-point]
-
-function renderApp(root, { settings }) {
-  // Use the merchant-defined settings to retrieve the extension's content
+    // Use the merchant-defined settings to retrieve the extension's content
 // [START custom-banner.use-settings]
-  // Set the content of the banner
-  const {title, description, collapsible, status: merchantStatus} = settings;
+    // Set the content of the banner
+    const { status, collapsible, description } = settings.current;
 
-  // Set a default status for the banner if a merchant didn't configure the banner in the checkout editor
-  const status = merchantStatus ?? 'info';
+    // Set a default status for the banner if a merchant didn't configure the banner in the checkout editor
+    const title = settings.current.title ?? "Custom Banner";
 // [END custom-banner.use-settings]
 // [START custom-banner.render]
-  // Render the banner
-  const app = root.createComponent(
-    Banner,
-    {
-      title,
-      status,
-      collapsible,
-    },
-    [description]
-  );
+    // Render the banner
+    const banner = root.createComponent(
+      Banner,
+      {
+        title,
+        status,
+        collapsible,
+      }[description]
+    );
 
-  root.appendChild(app);
-}
+    // When the merchant updates the banner title in the checkout editor, re-render the banner
+    settings.subscribe((newSettings) => {
+      banner.updateProps({
+        title: newSettings.title ?? "Custom Banner",
+        status: newSettings.status,
+        collapsible: newSettings.collapsible,
+      });
+    });
+
+    root.appendChild(banner);
+  }
+);
 // [END custom-banner.render]
