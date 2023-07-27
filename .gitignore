@@ -12,3 +12,6 @@ database.sqlite
 .env
 package-lock.json
 yarn.lock
+
+/extensions/**/node_modules
+/extensions/**/dist
