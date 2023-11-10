@@ -9,10 +9,11 @@ export default extension(
     // Use the merchant-defined settings to retrieve the extension's content
 // [START custom-banner.use-settings]
     // Set the content of the banner
-    const { status, collapsible, description } = settings.current;
+    const { status, collapsible } = settings.current;
 
     // Set a default status for the banner if a merchant didn't configure the banner in the checkout editor
-    const title = settings.current.title ?? "Custom Banner";
+    const title = settings.current.title ?? "Custom banner";
+    const description = settings.current.description ?? "Custom banner description";
 // [END custom-banner.use-settings]
 // [START custom-banner.render]
     // Render the banner
@@ -29,7 +30,7 @@ export default extension(
     // When the merchant updates the banner title in the checkout editor, re-render the banner
     settings.subscribe((newSettings) => {
       banner.updateProps({
-        title: newSettings.title ?? "Custom Banner",
+        title: newSettings.title ?? "Custom banner",
         status: newSettings.status,
         collapsible: newSettings.collapsible,
       });
