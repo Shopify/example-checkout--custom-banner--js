@@ -22,7 +22,8 @@ export default extension(
         title,
         status,
         collapsible,
-      }[description]
+      },
+      description
     );
 
     // When the merchant updates the banner title in the checkout editor, re-render the banner
